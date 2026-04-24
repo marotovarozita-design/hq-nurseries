@@ -91,6 +91,29 @@
     });
   });
 
+  // ---------- Scroll to top ----------
+  const toTop = document.querySelector('.to-top');
+  if (toTop) {
+    const tick = () => toTop.classList.toggle('is-visible', window.scrollY > 600);
+    tick();
+    window.addEventListener('scroll', tick, { passive: true });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  }
+
+  // ---------- Newsletter mock submit ----------
+  document.querySelectorAll('.newsletter__form').forEach(form => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = form.querySelector('input[type="email"]');
+      const btn = form.querySelector('button');
+      if (!input || !input.value) return;
+      btn.textContent = 'Subscribed ✓';
+      btn.disabled = true;
+      input.value = '';
+      setTimeout(() => { btn.textContent = 'Subscribe'; btn.disabled = false; }, 2600);
+    });
+  });
+
   // ---------- Current year in footer ----------
   const yr = document.getElementById('year');
   if (yr) yr.textContent = new Date().getFullYear();
